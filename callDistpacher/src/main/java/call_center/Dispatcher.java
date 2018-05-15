@@ -15,7 +15,7 @@ public class Dispatcher extends Thread {
 	private PriorityBlockingQueue<Employee> employees;
 	private BlockingQueue<Call> calls;
 
-	Dispatcher() {
+	public Dispatcher() {
 		this.employees = new PriorityBlockingQueue<>();
 		this.calls = new LinkedBlockingQueue<>();
 	}
@@ -30,7 +30,7 @@ public class Dispatcher extends Thread {
 		}
 	}
 
-	public void addEmployee(Employee employee) {
+	void addEmployee(Employee employee) {
 		this.employees.add(employee);
 	}
 
@@ -45,7 +45,7 @@ public class Dispatcher extends Thread {
 		return calls;
 	}
 
-	void setCalls(List<Call> calls) {
+	void addCalls(List<Call> calls) {
 		for (Call call : calls) {
 			this.receiveCall(call);
 		}
@@ -55,7 +55,7 @@ public class Dispatcher extends Thread {
 		return employees;
 	}
 
-	void setEmployees(List<Employee> employees) {
+	void addEmployees(List<Employee> employees) {
 		this.employees.addAll(employees);
 	}
 

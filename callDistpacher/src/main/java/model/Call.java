@@ -16,15 +16,15 @@ public class Call {
 		this.duration = new Random().nextInt(MAX_DURATION - MIN_DURATION + 1) + MIN_DURATION;
 	}
 
+	public static void resetIdSequence() {
+		ID_GENERATOR.set(1);
+	}
+
 	public Integer getId() {
 		return id;
 	}
 
 	Integer getDuration() {
 		return duration;
-	}
-
-	public void setDuration(Integer duration) {
-		this.duration = duration;
 	}
 }

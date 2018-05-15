@@ -15,6 +15,11 @@ public class Employee extends Thread implements Comparable<Employee> {
 	private EmployeeType type;
 	private Dispatcher dispatcher;
 
+	Employee(EmployeeType type) {
+		this.employeeId = ID_GENERATOR.getAndIncrement();
+		this.type = type;
+	}
+
 	public Employee(Dispatcher dispatcher, EmployeeType type) {
 		if (this.employeeId == null)
 			this.employeeId = ID_GENERATOR.getAndIncrement();
@@ -27,15 +32,19 @@ public class Employee extends Thread implements Comparable<Employee> {
 		this.employeeId = employeeId;
 	}
 
+	public static void resetIdSequence() {
+		ID_GENERATOR.set(1);
+	}
+
 	public Integer getEmployeeId() {
 		return employeeId;
 	}
 
-	public Call getCall() {
+	Call getCall() {
 		return currentCall;
 	}
 
-	public void setCall(Call call) {
+	void setCall(Call call) {
 		this.currentCall = call;
 	}
 
@@ -43,7 +52,7 @@ public class Employee extends Thread implements Comparable<Employee> {
 		return type;
 	}
 
-	public void setType(EmployeeType type) {
+	void setType(EmployeeType type) {
 		this.type = type;
 	}
 
