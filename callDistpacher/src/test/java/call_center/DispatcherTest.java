@@ -74,9 +74,44 @@ class DispatcherTest {
 				},
 				() -> {
 					try {
-						// To end all the calls, the maximum time should be 20 seconds, then after 20
-						// seconds more there shouldn't be waiting calls and all the employees should be free
-						Thread.sleep(20 * 1000L);
+						// To end all the calls, the maximum time should be 20 seconds, then
+						// after 21 seconds more there shouldn't be waiting calls and all the
+						// employees should be free
+						Thread.sleep(21 * 1000L);
+						assertTrue(dispatcher.getCalls().isEmpty());
+					} catch (InterruptedException e) {
+						fail(e.getMessage());
+						Thread.currentThread().interrupt();
+					}
+				},
+				() -> assertEquals(5, dispatcher.getEmployees().size()));
+
+	}
+
+	@Test
+	void test20Calls() {
+		populateEmployees(5);
+		populateCalls(20);
+		dispatcher.start();
+		assertAll(
+				() -> {
+					try {
+						// For end the 20 calls for 5 employees, the minimum time to end all the
+						// calls should be 20 seconds, then after 10 seconds there should be
+						// waiting calls in the queue
+						Thread.sleep(10 * 1000L);
+						assertTrue(!dispatcher.getCalls().isEmpty());
+					} catch (InterruptedException e) {
+						fail(e.getMessage());
+						Thread.currentThread().interrupt();
+					}
+				},
+				() -> {
+					try {
+						// To end all the calls, the maximum time should be 40 seconds, then
+						// after 31 seconds more there shouldn't be waiting calls and all the
+						// employees should be free
+						Thread.sleep(31 * 1000L);
 						assertTrue(dispatcher.getCalls().isEmpty());
 					} catch (InterruptedException e) {
 						fail(e.getMessage());
